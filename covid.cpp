@@ -205,11 +205,64 @@ int main(int argc, char *argv[]){
     hgua->SetBinContent(i,guariti[i]-guariti[i-1]);
     hmor->SetBinContent(i,morti[i]-morti[i-1]);
   }
-  
+
   htot->Draw("B");
   hpos->Draw("Bsame");
   hgua->Draw("Bsame");
   hmor->Draw("Bsame");
+  
+  ////////////////////////////////////////////////////
+  
+  int width = 7;
+  double pos_avg[1000];
+  double mor_avg[1000];
+  double gua_avg[1000];
+  double tot_avg[1000];
+  for (int i = 0; i < (j-1); i++){
+    double pos_temp = hpos->GetBinContent(i);
+    double mor_temp = hmor->GetBinContent(i);
+    double gua_temp = hgua->GetBinContent(i);
+    double tot_temp = htot->GetBinContent(i);
+    int contavg = 1;
+    for (int k = 1; k < width; k++){
+      if ( (i+k) < (j-1) ){
+	pos_temp += hpos->GetBinContent(i+k);
+	mor_temp += hmor->GetBinContent(i+k);
+	gua_temp += hgua->GetBinContent(i+k);
+	tot_temp += htot->GetBinContent(i+k);
+	contavg++;
+      }
+    }
+    pos_temp /= contavg;
+    mor_temp /= contavg;
+    gua_temp /= contavg;
+    tot_temp /= contavg;
+    pos_avg[i] = pos_temp;
+    gua_avg[i] = gua_temp;
+    mor_avg[i] = mor_temp;
+    tot_avg[i] = tot_temp;
+  }
+  TGraph *ga1 = new TGraph(j-1, date, pos_avg);
+  ga1->SetMarkerColor(kRed);
+  ga1->SetLineColor(kRed);
+  ga1->SetLineWidth(2);
+  TGraph *ga2 = new TGraph(j-1, date, gua_avg);
+  ga2->SetMarkerColor(kGreen+1);
+  ga2->SetLineColor(kGreen+1);
+  ga2->SetLineWidth(2);
+  TGraph *ga3 = new TGraph(j-1, date, mor_avg);
+  ga3->SetMarkerColor(kBlack);
+  ga3->SetLineColor(kBlack);
+  ga3->SetLineWidth(2);
+  TGraph *ga4 = new TGraph(j-1, date, tot_avg);
+  ga4->SetMarkerColor(kBlue);
+  ga4->SetLineColor(kBlue);
+  ga4->SetLineWidth(2);
+  
+  ga1->Draw("Lsame");
+  ga2->Draw("Lsame");
+  ga3->Draw("Lsame");
+  ga4->Draw("Lsame");
   
   TLegend *leg1 = new TLegend(0.2,0.7,0.45,0.88);
   leg1->SetBorderSize(0);
