@@ -219,13 +219,14 @@ int main(int argc, char *argv[]){
   double gua_avg[1000];
   double tot_avg[1000];
   for (int i = 0; i < (j-1); i++){
-    double pos_temp = hpos->GetBinContent(i);
-    double mor_temp = hmor->GetBinContent(i);
-    double gua_temp = hgua->GetBinContent(i);
-    double tot_temp = htot->GetBinContent(i);
-    int contavg = 1;
-    for (int k = 1; k < width; k++){
-      if ( (i+k) < (j-1) ){
+    double pos_temp = 0;//hpos->GetBinContent(i);
+    double mor_temp = 0;//hmor->GetBinContent(i);
+    double gua_temp = 0;//hgua->GetBinContent(i);
+    double tot_temp = 0;//htot->GetBinContent(i);
+    int contavg = 0;
+    int half = (width - 1)/2;
+    for (int k = -half; k <= half; k++){
+      if ( (i+k) > 0 && (i+k) < (j-1) ){
 	pos_temp += hpos->GetBinContent(i+k);
 	mor_temp += hmor->GetBinContent(i+k);
 	gua_temp += hgua->GetBinContent(i+k);
