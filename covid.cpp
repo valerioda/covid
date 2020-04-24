@@ -205,7 +205,7 @@ int main(int argc, char *argv[]){
     hgua->SetBinContent(i,guariti[i]-guariti[i-1]);
     hmor->SetBinContent(i,morti[i]-morti[i-1]);
   }
-
+  htot->GetYaxis()->SetRangeUser(-1000,7000);
   htot->Draw("B");
   hpos->Draw("Bsame");
   hgua->Draw("Bsame");
