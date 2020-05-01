@@ -265,7 +265,7 @@ int main(int argc, char *argv[]){
   ga3->Draw("Lsame");
   ga4->Draw("Lsame");
   
-  TLegend *leg1 = new TLegend(0.2,0.7,0.45,0.88);
+  TLegend *leg1 = new TLegend(0.12,0.7,0.35,0.88);
   leg1->SetBorderSize(0);
   leg1->AddEntry(htot, "contagiati totali","F");
   leg1->AddEntry(hpos, "attualmente positivi","F");
